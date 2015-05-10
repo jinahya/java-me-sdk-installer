@@ -6,11 +6,11 @@
   <!-- The Basics -->
   <groupId>com.github.jinahya</groupId>
   <artifactId>java-me-sdk-installer</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.1</version>
   <packaging>pom</packaging>
   <dependencyManagement />
-  <dependencies/>
-  <properties/>
+  <dependencies />
+  <properties />
 
   <!-- Build Settings -->
   <build>
@@ -232,7 +232,7 @@
     <connection>scm:git:git@github.com:jinahya/java-me-sdk-installer.git</connection>
     <developerConnection>scm:git:git@github.com:jinahya/java-me-sdk-installer.git</developerConnection>
     <url>https://github.com/jinahya/java-me-sdk-installer</url>
-    <tag>HEAD</tag>
+    <tag>0.1</tag>
   </scm>
   <prerequisites />
   <repositories />
@@ -819,18 +819,10 @@
                 </goals>
                 <configuration>
                   <target>
-                    <zip destfile="${project.build.directory}/${deploy.groupId}.zip"
-                         basedir="${settings.localRepository}"
-                         includes="${deploy.groupId}/**/*"/>
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar"
-                         basedir="${settings.localRepository}"
-                         includes="${deploy.groupId}/**/*"/>
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.gz"
-                         basedir="${settings.localRepository}"
-                         includes="${deploy.groupId}/**/*" compression="gzip"/>
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.bz2"
-                         basedir="${settings.localRepository}"
-                         includes="${deploy.groupId}/**/*" compression="bzip2"/>
+                    <zip destfile="${project.build.directory}/${deploy.groupId}.zip" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" />
+                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" />
+                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.gz" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" compression="gzip" />
+                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.bz2" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" compression="bzip2" />
                   </target>
                 </configuration>
               </execution>
@@ -1260,18 +1252,10 @@
                 </goals>
                 <configuration>
                   <target>
-                    <zip destfile="${project.build.directory}/${deploy.groupId}.zip"
-                         basedir="${settings.localRepository}"
-                         includes="${deploy.groupId}/**/*"/>
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar"
-                         basedir="${settings.localRepository}"
-                         includes="${deploy.groupId}/**/*"/>
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.gz"
-                         basedir="${settings.localRepository}"
-                         includes="${deploy.groupId}/**/*" compression="gzip"/>
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.bz2"
-                         basedir="${settings.localRepository}"
-                         includes="${deploy.groupId}/**/*" compression="bzip2"/>
+                    <zip destfile="${project.build.directory}/${deploy.groupId}.zip" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" />
+                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" />
+                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.gz" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" compression="gzip" />
+                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.bz2" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" compression="bzip2" />
                   </target>
                 </configuration>
               </execution>
