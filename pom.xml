@@ -6,7 +6,7 @@
   <!-- The Basics -->
   <groupId>com.github.jinahya</groupId>
   <artifactId>java-me-sdk-installer</artifactId>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.2</version>
   <packaging>pom</packaging>
   <dependencyManagement />
   <dependencies />
@@ -237,7 +237,7 @@
     <connection>scm:git:git@github.com:jinahya/java-me-sdk-installer.git</connection>
     <developerConnection>scm:git:git@github.com:jinahya/java-me-sdk-installer.git</developerConnection>
     <url>https://github.com/jinahya/java-me-sdk-installer</url>
-    <tag>HEAD</tag>
+    <tag>0.2</tag>
   </scm>
   <prerequisites />
   <repositories />
