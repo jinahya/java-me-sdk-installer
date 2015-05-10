@@ -330,7 +330,7 @@
     <profile>
       <id>javame34</id>
       <properties>
-        <deploy.groupId>javame34</deploy.groupId>
+        <target.groupId>javame34</target.groupId>
       </properties>
       <build>
         <plugins>
@@ -366,7 +366,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>agui</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -381,7 +381,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>amsc</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -396,7 +396,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cdc</artifactId>
                   <version>1.1</version>
                   <packaging>jar</packaging>
@@ -411,7 +411,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -426,7 +426,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.1</version>
                   <packaging>jar</packaging>
@@ -441,7 +441,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>deviceaccess</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -456,7 +456,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>embedded-support-api</artifactId>
                   <version>noversion</version>
                   <packaging>jar</packaging>
@@ -471,7 +471,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>fp</artifactId>
                   <version>1.1</version>
                   <packaging>jar</packaging>
@@ -486,7 +486,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>impng</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -501,7 +501,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr75</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -516,7 +516,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr082</artifactId>
                   <version>1.1</version>
                   <packaging>jar</packaging>
@@ -531,7 +531,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr120</artifactId>
                   <version>1.1</version>
                   <packaging>jar</packaging>
@@ -546,7 +546,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr135</artifactId>
                   <version>1.2</version>
                   <packaging>jar</packaging>
@@ -561,7 +561,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr172</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -576,7 +576,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -591,7 +591,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr179</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -606,7 +606,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr184</artifactId>
                   <version>1.1</version>
                   <packaging>jar</packaging>
@@ -621,7 +621,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr205</artifactId>
                   <version>2.0</version>
                   <packaging>jar</packaging>
@@ -636,7 +636,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr211</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -651,7 +651,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr226</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -666,7 +666,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr234</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -681,7 +681,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr239</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -696,7 +696,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr256</artifactId>
                   <version>1.2</version>
                   <packaging>jar</packaging>
@@ -711,7 +711,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr257</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -726,7 +726,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr280</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -741,7 +741,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>logging</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -756,7 +756,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>midp</artifactId>
                   <version>2.0</version>
                   <packaging>jar</packaging>
@@ -771,7 +771,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>omda-ap</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -786,7 +786,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>pbp</artifactId>
                   <version>1.1</version>
                   <packaging>jar</packaging>
@@ -801,7 +801,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>secop</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -823,10 +823,10 @@
                 </goals>
                 <configuration>
                   <target>
-                    <zip destfile="${project.build.directory}/${deploy.groupId}.zip" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" />
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" />
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.gz" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" compression="gzip" />
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.bz2" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" compression="bzip2" />
+                    <zip destfile="${project.build.directory}/${target.groupId}.zip" basedir="${settings.localRepository}" includes="${target.groupId}/**/*" />
+                    <tar destfile="${project.build.directory}/${target.groupId}.tar" basedir="${settings.localRepository}" includes="${target.groupId}/**/*" />
+                    <tar destfile="${project.build.directory}/${target.groupId}.tar.gz" basedir="${settings.localRepository}" includes="${target.groupId}/**/*" compression="gzip" />
+                    <tar destfile="${project.build.directory}/${target.groupId}.tar.bz2" basedir="${settings.localRepository}" includes="${target.groupId}/**/*" compression="bzip2" />
                   </target>
                 </configuration>
               </execution>
@@ -838,7 +838,7 @@
     <profile>
       <id>javame81</id>
       <properties>
-        <deploy.groupId>javame81</deploy.groupId>
+        <target.groupId>javame81</target.groupId>
       </properties>
       <build>
         <plugins>
@@ -874,7 +874,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.8</version>
                   <packaging>jar</packaging>
@@ -889,7 +889,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>configuration</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -904,7 +904,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -919,7 +919,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>gcf</artifactId>
                   <version>1.8</version>
                   <packaging>jar</packaging>
@@ -934,7 +934,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>httpclient</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -949,7 +949,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>json</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -964,7 +964,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr75-fc</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -979,7 +979,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr120</artifactId>
                   <version>1.1</version>
                   <packaging>jar</packaging>
@@ -994,7 +994,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr172</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -1009,7 +1009,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-apdu</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -1024,7 +1024,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-crypto</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -1039,7 +1039,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr179</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -1054,7 +1054,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr280</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -1069,7 +1069,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1084,7 +1084,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-celluar</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1099,7 +1099,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-event</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1114,7 +1114,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-io</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1129,7 +1129,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-key</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1144,7 +1144,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-lui</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1159,7 +1159,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-media</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1174,7 +1174,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-power</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1189,7 +1189,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-rms</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1204,7 +1204,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-swm</artifactId>
                   <version>8.0</version>
                   <packaging>jar</packaging>
@@ -1219,7 +1219,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>oauth2</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -1234,7 +1234,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${deploy.groupId}</groupId>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>satsa-extensions-api</artifactId>
                   <version>1.0</version>
                   <packaging>jar</packaging>
@@ -1256,10 +1256,10 @@
                 </goals>
                 <configuration>
                   <target>
-                    <zip destfile="${project.build.directory}/${deploy.groupId}.zip" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" />
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" />
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.gz" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" compression="gzip" />
-                    <tar destfile="${project.build.directory}/${deploy.groupId}.tar.bz2" basedir="${settings.localRepository}" includes="${deploy.groupId}/**/*" compression="bzip2" />
+                    <zip destfile="${project.build.directory}/${target.groupId}.zip" basedir="${settings.localRepository}" includes="${target.groupId}/**/*" />
+                    <tar destfile="${project.build.directory}/${target.groupId}.tar" basedir="${settings.localRepository}" includes="${target.groupId}/**/*" />
+                    <tar destfile="${project.build.directory}/${target.groupId}.tar.gz" basedir="${settings.localRepository}" includes="${target.groupId}/**/*" compression="gzip" />
+                    <tar destfile="${project.build.directory}/${target.groupId}.tar.bz2" basedir="${settings.localRepository}" includes="${target.groupId}/**/*" compression="bzip2" />
                   </target>
                 </configuration>
               </execution>
