@@ -38,6 +38,11 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>1.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>1.6</version>
         </plugin>
@@ -255,7 +260,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>1.4</version>
             <executions>
               <execution>
                 <id>require-release-version</id>
@@ -334,7 +338,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
             <executions>
-              <execution>  
+              <execution>
                 <id>enforce-variables-and-properties</id>
                 <goals>
                   <goal>enforce</goal>
@@ -459,7 +463,7 @@
                   <generatePom>true</generatePom>
                   <file>${env.JAVAME34_HOME}/lib/embedded-support-api.jar</file>
                 </configuration>
-              </execution> 
+              </execution>
               <execution>
                 <id>fp_1.1.jar</id>
                 <goals>
@@ -842,7 +846,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
             <executions>
-              <execution>  
+              <execution>
                 <id>enforce-variables-and-properties</id>
                 <goals>
                   <goal>enforce</goal>
@@ -907,7 +911,7 @@
                   <generatePom>true</generatePom>
                   <file>${env.JAVAME81_HOME}/lib/device-io_1.0.jar</file>
                 </configuration>
-              </execution> 
+              </execution>
               <execution>
                 <id>gcf_1.8.jar</id>
                 <goals>
