@@ -1,4 +1,5 @@
 # java-me-sdk-installer
+Installs/Deploys artifacts in oracle's java me sdk installation directory to local/remote repositories.
 
 |sdk                   |profile.id|environment.variable|${groupId}       |
 |----------------------|:--------:|--------------------|-----------------|
