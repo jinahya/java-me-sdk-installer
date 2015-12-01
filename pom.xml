@@ -107,7 +107,7 @@
           <execution>
             <id>enforce-require-home</id>
             <goals>
-              <goal>enforce</goal>
+              <!--<goal>enforce</goal>-->
             </goals>
             <configuration>
               <failFast>true</failFast>
