@@ -4,7 +4,7 @@
 |----------------------|:--------:|--------------------|-----------------|
 |ORACLE JAVA ME SDK 3.4|javame34  |JAVAME34_HOME       |javame34         |
 |ORACLE JAVA ME SDK 8.1|javame81  |JAVAME81_HOME       |javame81         |
-|ORACLE JAVA ME SDK 8.2|javame81  |JAVAME82_HOME       |javame81         |
+|ORACLE JAVA ME SDK 8.2|javame82  |JAVAME82_HOME       |javame82         |
 
 ## install to local repository
 ````
