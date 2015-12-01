@@ -10,7 +10,7 @@
 
   <groupId>com.github.jinahya</groupId>
   <artifactId>java-me-sdk-installer</artifactId>
-  <version>0.7</version>
+  <version>0.8</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
@@ -25,7 +25,7 @@
     <connection>scm:git:git@github.com:jinahya/${project.artifactId}.git</connection>
     <developerConnection>scm:git:git@github.com:jinahya/${project.artifactId}.git</developerConnection>
     <url>https://github.com/jinahya/${project.artifactId}</url>
-    <tag>0.7</tag>
+    <tag>0.8</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issues</system>
@@ -80,43 +80,22 @@
             <configuration>
               <target>
                 <echo message="basedir: ${settings.localRepository}" />
-                <echo message="groupId: ${groupId}" />
-                <property name="groupPath_" value="${groupId}" />
-                <loadresource property="groupPath">
-                  <propertyresource name="groupPath_" />
+                <echo message="target.groupId: ${target.groupId}" />
+                <property name="target.groupPath_" value="${target.groupId}" />
+                <loadresource property="target.groupPath">
+                  <propertyresource name="target.groupPath_" />
                   <filterchain>
                     <tokenfilter>
                       <replaceregex pattern="\." replace="/" flags="g" />
                     </tokenfilter>
                   </filterchain>
                 </loadresource>
-                <echo message="groupPath: ${groupPath}" />
-                <zip destfile="${project.build.directory}/${groupId}.zip" basedir="${settings.localRepository}" includes="${groupPath}/**/*" />
-                <tar destfile="${project.build.directory}/${groupId}.tar" basedir="${settings.localRepository}" includes="${groupPath}/**/*" />
-                <gzip src="${project.build.directory}/${groupId}.tar" destfile="${project.build.directory}/${groupId}.tar.gz" />
-                <bzip2 src="${project.build.directory}/${groupId}.tar" destfile="${project.build.directory}/${groupId}.tar.bz2" />
+                <echo message="target.groupPath: ${target.groupPath}" />
+                <zip destfile="${project.build.directory}/${target.groupId}.zip" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
+                <tar destfile="${project.build.directory}/${target.groupId}.tar" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
+                <gzip src="${project.build.directory}/${target.groupId}.tar" destfile="${project.build.directory}/${target.groupId}.tar.gz" />
+                <bzip2 src="${project.build.directory}/${target.groupId}.tar" destfile="${project.build.directory}/${target.groupId}.tar.bz2" />
               </target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>enforce-require-home</id>
-            <goals>
-              <!--<goal>enforce</goal>-->
-            </goals>
-            <configuration>
-              <failFast>true</failFast>
-              <rules>
-                <requireEnvironmentVariable>
-                  <variableName>${home}</variableName>
-                  <message>environment variable not found: ${home}</message>
-                </requireEnvironmentVariable>
-              </rules>
             </configuration>
           </execution>
         </executions>
@@ -151,8 +130,7 @@
     <profile>
       <id>javame34</id>
       <properties>
-        <home>JAVAME34_HOME</home>
-        <groupId>javame34</groupId>
+        <target.groupId>javame34</target.groupId>
         <path>${env.JAVAME34_HOME}</path>
       </properties>
       <build>
@@ -168,6 +146,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>agui</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/agui_1.0.jar</file>
@@ -180,6 +159,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>amsc</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/ams_1.0.jar</file>
@@ -192,6 +172,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cdc</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/cdc_1.1.jar</file>
@@ -204,6 +185,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/cldc_1.0.jar</file>
@@ -216,6 +198,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/cldc_1.1.jar</file>
@@ -228,6 +211,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>deviceaccess</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/deviceaccess_1.0.jar</file>
@@ -240,6 +224,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>embedded-support-api</artifactId>
                   <version>noversion</version>
                   <file>${path}/lib/embedded-support-api.jar</file>
@@ -252,6 +237,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>fp</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/fp_1.1.jar</file>
@@ -264,6 +250,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>impng</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/impng_1.0.jar</file>
@@ -276,6 +263,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr75</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr75_1.0.jar</file>
@@ -288,6 +276,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr082</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/jsr082_1.1.jar</file>
@@ -300,6 +289,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr120</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/jsr120_1.1.jar</file>
@@ -312,6 +302,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr135</artifactId>
                   <version>1.2</version>
                   <file>${path}/lib/jsr135_1.2.jar</file>
@@ -324,6 +315,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr172</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr172_1.0.jar</file>
@@ -336,6 +328,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr177_1.0.jar</file>
@@ -348,6 +341,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr179</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr179_1.0.jar</file>
@@ -360,6 +354,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr184</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/jsr184_1.1.jar</file>
@@ -372,6 +367,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr205</artifactId>
                   <version>2.0</version>
                   <file>${path}/lib/jsr205_2.0.jar</file>
@@ -384,6 +380,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr211</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr211_1.0.jar</file>
@@ -396,6 +393,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr226</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr226_1.0.jar</file>
@@ -408,6 +406,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr234</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr234_1.0.jar</file>
@@ -420,6 +419,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr239</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr239_1.0.jar</file>
@@ -432,6 +432,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr256</artifactId>
                   <version>1.2</version>
                   <file>${path}/lib/jsr256_1.2.jar</file>
@@ -444,6 +445,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr257</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr257_1.0.jar</file>
@@ -456,6 +458,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr280</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr280_1.0.jar</file>
@@ -468,6 +471,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>logging</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/logging_1.0.jar</file>
@@ -480,6 +484,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>midp</artifactId>
                   <version>2.0</version>
                   <file>${path}/lib/midp_2.0.jar</file>
@@ -492,6 +497,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>omda-ap</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/omda_ap_1.0.jar</file>
@@ -504,6 +510,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>pbp</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/pbp_1.1.jar</file>
@@ -516,6 +523,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>secop</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/secop_1.0.jar</file>
@@ -529,8 +537,7 @@
     <profile>
       <id>javame81</id>
       <properties>
-        <home>JAVAME81_HOME</home>
-        <groupId>javame81</groupId>
+        <target.groupId>javame81</target.groupId>
         <path>${env.JAVAME81_HOME}</path>
       </properties>
       <build>
@@ -546,6 +553,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.8</version>
                   <file>${path}/lib/cldc_1.8.jar</file>
@@ -558,6 +566,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>configuration</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/configuration_1.0.jar</file>
@@ -570,6 +579,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/device-io_1.0.jar</file>
@@ -582,6 +592,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>gcf</artifactId>
                   <version>1.8</version>
                   <file>${path}/lib/gcf_1.8.jar</file>
@@ -594,6 +605,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>httpclient</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/httpclient_1.0.jar</file>
@@ -606,6 +618,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>json</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/json_1.0.jar</file>
@@ -618,6 +631,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr75-fc</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr75_1.0-fc.jar</file>
@@ -630,6 +644,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr120</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/jsr120_1.1.jar</file>
@@ -642,6 +657,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr172</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr172_1.0.jar</file>
@@ -654,6 +670,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-apdu</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr177_1.0-apdu.jar</file>
@@ -666,6 +683,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-crypto</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr177_1.0-crypto.jar</file>
@@ -678,6 +696,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr179</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr179_1.0.jar</file>
@@ -690,6 +709,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr280</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr280_1.0.jar</file>
@@ -702,6 +722,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0.jar</file>
@@ -714,6 +735,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-celluar</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-cellular.jar</file>
@@ -726,6 +748,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-event</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-event.jar</file>
@@ -738,6 +761,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-io</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-io.jar</file>
@@ -750,6 +774,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-key</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-key.jar</file>
@@ -762,6 +787,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-lui</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-lui.jar</file>
@@ -774,6 +800,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-media</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-media.jar</file>
@@ -786,6 +813,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-power</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-power.jar</file>
@@ -798,6 +826,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-rms</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-rms.jar</file>
@@ -810,6 +839,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-swm</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-swm.jar</file>
@@ -822,6 +852,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>oauth2</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/oauth2_1.0.jar</file>
@@ -834,6 +865,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>satsa-extensions-api</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/satsa_extensions_api.jar</file>
@@ -847,8 +879,7 @@
     <profile>
       <id>javame82</id>
       <properties>
-        <home>JAVAME82_HOME</home>
-        <groupId>javame82</groupId>
+        <target.groupId>javame82</target.groupId>
         <path>${env.JAVAME82_HOME}</path>
       </properties>
       <build>
@@ -864,6 +895,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.8</version>
                   <file>${path}/lib/cldc_1.8.jar</file>
@@ -876,6 +908,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>configuration</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/configuration_1.0.jar</file>
@@ -888,6 +921,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/device-io_1.0.jar</file>
@@ -900,6 +934,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1.jar</file>
@@ -912,6 +947,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-adc</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_adc.jar</file>
@@ -924,6 +960,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-atcmd</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_atcmd.jar</file>
@@ -936,6 +973,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-counter</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_counter.jar</file>
@@ -948,6 +986,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-dac</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_dac.jar</file>
@@ -960,6 +999,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-generic</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_generic.jar</file>
@@ -972,6 +1012,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-gpio</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_gpio.jar</file>
@@ -984,6 +1025,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-i2cbus</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_i2cbus.jar</file>
@@ -996,6 +1038,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-mmio</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_mmio.jar</file>
@@ -1008,6 +1051,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-modem</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_modem.jar</file>
@@ -1020,6 +1064,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-pwm</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_pwm.jar</file>
@@ -1032,6 +1077,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-spibus</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_spibus.jar</file>
@@ -1044,6 +1090,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-uart</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_uart.jar</file>
@@ -1056,6 +1103,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-watchdog</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/device-io_1.1_watchdog.jar</file>
@@ -1068,6 +1116,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>gcf</artifactId>
                   <version>1.8</version>
                   <file>${path}/lib/gcf_1.8.jar</file>
@@ -1080,6 +1129,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>httpclient</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/httpclient_1.1.jar</file>
@@ -1092,6 +1142,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>json</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/json_1.0.jar</file>
@@ -1104,6 +1155,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr75-fc</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr75_1.0-fc.jar</file>
@@ -1116,6 +1168,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr120</artifactId>
                   <version>1.1</version>
                   <file>${path}/lib/jsr120_1.1.jar</file>
@@ -1128,6 +1181,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr172</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr172_1.0.jar</file>
@@ -1140,6 +1194,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-apdu</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr177_1.0-apdu.jar</file>
@@ -1152,6 +1207,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-crypto</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr177_1.0-crypto.jar</file>
@@ -1164,6 +1220,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr179</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr179_1.0.jar</file>
@@ -1176,6 +1233,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr280</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/jsr280_1.0.jar</file>
@@ -1188,6 +1246,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0.jar</file>
@@ -1200,6 +1259,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-celluar</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-cellular.jar</file>
@@ -1212,6 +1272,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-event</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-event.jar</file>
@@ -1224,6 +1285,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-io</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-io.jar</file>
@@ -1236,6 +1298,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-key</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-key.jar</file>
@@ -1248,6 +1311,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-lui</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-lui.jar</file>
@@ -1260,6 +1324,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-media</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-media.jar</file>
@@ -1272,6 +1337,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-power</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-power.jar</file>
@@ -1284,6 +1350,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-rms</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-rms.jar</file>
@@ -1296,6 +1363,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-swm</artifactId>
                   <version>8.0</version>
                   <file>${path}/lib/meep_8.0-swm.jar</file>
@@ -1308,6 +1376,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>oauth2</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/oauth2_1.0.jar</file>
@@ -1320,6 +1389,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>satsa-extensions-api</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/satsa_extensions_api.jar</file>
@@ -1332,6 +1402,7 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
+                  <groupId>${target.groupId}</groupId>
                   <artifactId>ssl-extensions-api</artifactId>
                   <version>1.0</version>
                   <file>${path}/lib/ssl_extensions_api.jar</file>
