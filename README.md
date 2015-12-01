@@ -1,10 +1,10 @@
 # java-me-sdk-installer
 
-|sdk                   |profile.id|environment.variable|${groupId}       |notes|
-|----------------------|:--------:|--------------------|-----------------|-----|
-|ORACLE JAVA ME SDK 3.4|javame34  |JAVAME34_HOME       |javame34         ||
-|ORACLE JAVA ME SDK 8.1|javame81  |JAVAME81_HOME       |javame81         ||
-|ORACLE JAVA ME SDK 8.2|javame82  |JAVAME82_HOME       |javame82         |*ubuntu*|
+|sdk                   |profile.id|environment.variable|${groupId}       |
+|----------------------|:--------:|--------------------|-----------------|
+|ORACLE JAVA ME SDK 3.4|javame34  |JAVAME34_HOME       |javame34         |
+|ORACLE JAVA ME SDK 8.1|javame81  |JAVAME81_HOME       |javame81         |
+|ORACLE JAVA ME SDK 8.2|javame82  |JAVAME82_HOME       |javame82         |
 
 ## install to local repository
 ````
