@@ -846,9 +846,6 @@
     </profile>
     <profile>
       <id>javame82</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <properties>
         <home>JAVAME82_HOME</home>
         <groupId>javame82</groupId>
