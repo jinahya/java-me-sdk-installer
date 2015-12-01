@@ -1,7 +1,7 @@
 # java-me-sdk-installer
 Installs/Deploys artifacts in oracle's java me sdk installation directory to local/remote repositories.
 
-|sdk                   |profile.id|environment.variable|${groupId}       |
+|sdk                   |profile.id|environment.variable|${target.groupId}|
 |----------------------|:--------:|--------------------|-----------------|
 |ORACLE JAVA ME SDK 3.4|javame34  |JAVAME34_HOME       |javame34         |
 |ORACLE JAVA ME SDK 8.1|javame81  |JAVAME81_HOME       |javame81         |
