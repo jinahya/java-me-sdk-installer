@@ -16,7 +16,7 @@ Installs/Deploys artifacts in Oracle's Java ME SDK installation directory to loc
 
 **You should activate a profile and a profile only.**
 
-## install
+## install (and archive)
 
 ````
 $ mvn -P<profile.id> install
