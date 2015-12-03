@@ -10,7 +10,7 @@
 
   <groupId>com.github.jinahya</groupId>
   <artifactId>java-me-sdk-installer</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
@@ -25,7 +25,7 @@
     <connection>scm:git:git@github.com:jinahya/${project.artifactId}.git</connection>
     <developerConnection>scm:git:git@github.com:jinahya/${project.artifactId}.git</developerConnection>
     <url>https://github.com/jinahya/${project.artifactId}</url>
-    <tag>1.0.1</tag>
+    <tag>1.0.2</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issues</system>
@@ -64,7 +64,7 @@
         <executions>
           <execution>
             <id>archive</id>
-            <!--<phase>install</phase>-->
+            <!--<phase>deploy</phase>-->
             <goals>
               <goal>run</goal>
             </goals>
@@ -82,6 +82,7 @@
                   </filterchain>
                 </loadresource>
                 <echo message="target.groupPath: ${target.groupPath}" />
+                <mkdir dir="${project.build.directory}" />
                 <zip destfile="${project.build.directory}/${target.groupId}-${project.version}.zip" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
                 <tar destfile="${project.build.directory}/${target.groupId}-${project.version}.tar" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
                 <gzip src="${project.build.directory}/${target.groupId}-${project.version}.tar" destfile="${project.build.directory}/${target.groupId}-${project.version}.tar.gz" />
