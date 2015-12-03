@@ -10,7 +10,7 @@
 
   <groupId>com.github.jinahya</groupId>
   <artifactId>java-me-sdk-installer</artifactId>
-  <version>0.9-SNAPSHOT</version>
+  <version>0.9</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
@@ -25,7 +25,7 @@
     <connection>scm:git:git@github.com:jinahya/${project.artifactId}.git</connection>
     <developerConnection>scm:git:git@github.com:jinahya/${project.artifactId}.git</developerConnection>
     <url>https://github.com/jinahya/${project.artifactId}</url>
-    <tag>HEAD</tag>
+    <tag>0.9</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issues</system>
@@ -82,16 +82,10 @@
                   </filterchain>
                 </loadresource>
                 <echo message="target.groupPath: ${target.groupPath}" />
-                <zip destfile="${project.build.directory}/${target.groupId}-${project.version}.zip"
-                     basedir="${settings.localRepository}"
-                     includes="${target.groupPath}/**/*" />
-                <tar destfile="${project.build.directory}/${target.groupId}-${project.version}.tar"
-                     basedir="${settings.localRepository}"
-                     includes="${target.groupPath}/**/*" />
-                <gzip src="${project.build.directory}/${target.groupId}-${project.version}.tar"
-                      destfile="${project.build.directory}/${target.groupId}-${project.version}.tar.gz" />
-                <bzip2 src="${project.build.directory}/${target.groupId}-${project.version}.tar"
-                       destfile="${project.build.directory}/${target.groupId}-${project.version}.tar.bz2" />
+                <zip destfile="${project.build.directory}/${target.groupId}-${project.version}.zip" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
+                <tar destfile="${project.build.directory}/${target.groupId}-${project.version}.tar" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
+                <gzip src="${project.build.directory}/${target.groupId}-${project.version}.tar" destfile="${project.build.directory}/${target.groupId}-${project.version}.tar.gz" />
+                <bzip2 src="${project.build.directory}/${target.groupId}-${project.version}.tar" destfile="${project.build.directory}/${target.groupId}-${project.version}.tar.bz2" />
               </target>
             </configuration>
           </execution>
