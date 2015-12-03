@@ -1,6 +1,7 @@
 #!/bin/sh
-mvn -Pjavame30 install antrun:run@archive
-mvn -Pjavame305 install antrun:run@archive
-mvn -Pjavame34 install antrun:run@archive
-mvn -Pjavame81 install antrun:run@archive
-mvn -Pjavame82 install antrun:run@archive
+profiles=(javame30, javame305, javame34, javame81, javame82)
+for p in "${profiles[@]}"
+do
+    mvn -P$p install
+    mvn -P$p antrun:run@archive
+done
