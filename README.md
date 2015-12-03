@@ -1,28 +1,33 @@
 # java-me-sdk-installer
-[![Dependency Status](https://www.versioneye.com/user/projects/565fbdb0f376cc003d00012a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/565fbdb0f376cc003d00012a)
+[![Dependency Status](https://www.versioneye.com/user/projects/565fbdb0f376cc003d00012a/badge.svg)](https://www.versioneye.com/user/projects/565fbdb0f376cc003d00012a)
+[![Domate via Paypal](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_cart&business=A954LDFBW4B9N&lc=KR&item_name=GitHub&amount=5%2e00&currency_code=USD&button_subtype=products&add=1&bn=PP%2dShopCartBF%3adonate%2dpaypal%2dblue%2epng%3aNonHosted)
 
-Installs/Deploys artifacts in oracle's java me sdk installation directory to local/remote repositories.
+Installs/Deploys artifacts in Oracle's Java ME SDK installation directory to local/remote repositories.
 
-|sdk                     |profile.id|environment.variable|${target.groupId}|nots|
-|------------------------|:--------:|--------------------|-----------------|----|
-|ORACLE JAVA ME SDK 3.0  |javame30  |JAVAME30_HOME       |javame30         ||
-|ORACLE JAVA ME SDK 3.0.5|javame305 |JAVAME305_HOME      |javame305        |cldc:1.1.1|
-|ORACLE JAVA ME SDK 3.4  |javame34  |JAVAME34_HOME       |javame34         ||
-|ORACLE JAVA ME SDK 8.1  |javame81  |JAVAME81_HOME       |javame81         ||
-|ORACLE JAVA ME SDK 8.2  |javame82  |JAVAME82_HOME       |javame82         ||
+|sdk                     |profile.id|${source.homeDir}    |${target.groupId}|
+|------------------------|----------|---------------------|-----------------|
+|ORACLE JAVA ME SDK 3.0  |javame30  |${env.JAVAME30_HOME} |javame30         |
+|ORACLE JAVA ME SDK 3.0.5|javame305 |${env.JAVAME305_HOME}|javame305        |
+|ORACLE JAVA ME SDK 3.4  |javame34  |${env.JAVAME34_HOME} |javame34         |
+|ORACLE JAVA ME SDK 8.1  |javame81  |${env.JAVAME81_HOME} |javame81         |
+|ORACLE JAVA ME SDK 8.2  |javame82  |${env.JAVAME82_HOME} |javame82         |
+**You should activate a profile and only one profile.**
 
-## install to local repository
+## install
+
 ````
 mvn -P<profile.id> install
 ````
 
-## archive installed
+## archive
 You can archive those installed artifacts if you need.
 ````
 mvn -P<profile.id> antrun:run@archive
 ````
 
-## deploy to remote repository
+## deploy
 ````
 mvn -P<profile.id> -DrepositoryId=<repository.id> -Durl=<repository.url> install
 ````
+----
+[![Domate via Paypal](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_cart&business=A954LDFBW4B9N&lc=KR&item_name=GitHub&amount=5%2e00&currency_code=USD&button_subtype=products&add=1&bn=PP%2dShopCartBF%3adonate%2dpaypal%2dblue%2epng%3aNonHosted)
