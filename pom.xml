@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.github.jinahya</groupId>
     <artifactId>jinahya-parent</artifactId>
-    <version>0.5.1</version>
+    <version>0.6</version>
   </parent>
 
   <groupId>com.github.jinahya</groupId>
@@ -14,7 +14,7 @@
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
-  <description>an artifact intsalls jars from java me sdk</description>
+  <description>an artifact installs/deploys jars reside in Java ME SDK installation directory</description>
   <url>https://github.com/jinahya/${project.artifactId}</url>
 
   <prerequisites>
@@ -41,11 +41,6 @@
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
@@ -59,17 +54,13 @@
           <artifactId>maven-site-plugin</artifactId>
           <version>3.4</version>
         </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
         <executions>
           <execution>
             <id>archive</id>
@@ -79,7 +70,7 @@
             </goals>
             <configuration>
               <target>
-                <echo message="basedir: ${settings.localRepository}" />
+                <echo message="settings.localRespository: ${settings.localRepository}" />
                 <echo message="target.groupId: ${target.groupId}" />
                 <property name="target.groupPath_" value="${target.groupId}" />
                 <loadresource property="target.groupPath">
@@ -91,10 +82,16 @@
                   </filterchain>
                 </loadresource>
                 <echo message="target.groupPath: ${target.groupPath}" />
-                <zip destfile="${project.build.directory}/${target.groupId}.zip" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
-                <tar destfile="${project.build.directory}/${target.groupId}.tar" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
-                <gzip src="${project.build.directory}/${target.groupId}.tar" destfile="${project.build.directory}/${target.groupId}.tar.gz" />
-                <bzip2 src="${project.build.directory}/${target.groupId}.tar" destfile="${project.build.directory}/${target.groupId}.tar.bz2" />
+                <zip destfile="${project.build.directory}/${target.groupId}-${project.version}.zip"
+                     basedir="${settings.localRepository}"
+                     includes="${target.groupPath}/**/*" />
+                <tar destfile="${project.build.directory}/${target.groupId}-${project.version}.tar"
+                     basedir="${settings.localRepository}"
+                     includes="${target.groupPath}/**/*" />
+                <gzip src="${project.build.directory}/${target.groupId}-${project.version}.tar"
+                      destfile="${project.build.directory}/${target.groupId}-${project.version}.tar.gz" />
+                <bzip2 src="${project.build.directory}/${target.groupId}-${project.version}.tar"
+                       destfile="${project.build.directory}/${target.groupId}-${project.version}.tar.bz2" />
               </target>
             </configuration>
           </execution>
@@ -113,6 +110,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
+        <version>2.2</version>
         <reportSets>
           <reportSet>
             <reports>
@@ -128,16 +126,19 @@
 
   <profiles>
     <profile>
-      <id>javame34</id>
+      <id>javame30</id>
       <properties>
-        <target.groupId>javame34</target.groupId>
-        <path>${env.JAVAME34_HOME}</path>
+        <target.groupId>javame30</target.groupId>
+        <source.homeDir>${env.JAVAME30_HOME}</source.homeDir>
       </properties>
       <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <groupId>${target.groupId}</groupId>
+            </configuration>
             <executions>
               <execution>
                 <id>agui_1.0.jar</id>
@@ -146,23 +147,21 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>agui</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/agui_1.0.jar</file>
+                  <file>${source.homeDir}/lib/agui_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
-                <id>ams_1.0.jar</id>
+                <id>cdc_1.0.jar</id>
                 <goals>
                   <goal>deploy-file</goal>
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
-                  <artifactId>amsc</artifactId>
+                  <artifactId>cdc</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/ams_1.0.jar</file>
+                  <file>${source.homeDir}/lib/cdc_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -172,10 +171,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>cdc</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/cdc_1.1.jar</file>
+                  <file>${source.homeDir}/lib/cdc_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -185,10 +183,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/cldc_1.0.jar</file>
+                  <file>${source.homeDir}/lib/cldc_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -198,36 +195,21 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/cldc_1.1.jar</file>
+                  <file>${source.homeDir}/lib/cldc_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
-                <id>deviceaccess_1.0.jar</id>
+                <id>fp_1.0.jar</id>
                 <goals>
                   <goal>deploy-file</goal>
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
-                  <artifactId>deviceaccess</artifactId>
+                  <artifactId>fp</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/deviceaccess_1.0.jar</file>
-                </configuration>
-              </execution>
-              <execution>
-                <id>embedded-support-api.jar</id>
-                <goals>
-                  <goal>deploy-file</goal>
-                </goals>
-                <phase>install</phase>
-                <configuration>
-                  <groupId>${target.groupId}</groupId>
-                  <artifactId>embedded-support-api</artifactId>
-                  <version>noversion</version>
-                  <file>${path}/lib/embedded-support-api.jar</file>
+                  <file>${source.homeDir}/lib/fp_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -237,23 +219,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>fp</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/fp_1.1.jar</file>
-                </configuration>
-              </execution>
-              <execution>
-                <id>impng_1.0.jar</id>
-                <goals>
-                  <goal>deploy-file</goal>
-                </goals>
-                <phase>install</phase>
-                <configuration>
-                  <groupId>${target.groupId}</groupId>
-                  <artifactId>impng</artifactId>
-                  <version>1.0</version>
-                  <file>${path}/lib/impng_1.0.jar</file>
+                  <file>${source.homeDir}/lib/fp_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -263,10 +231,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr75</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr75_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr75_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -276,10 +243,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr082</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/jsr082_1.1.jar</file>
+                  <file>${source.homeDir}/lib/jsr082_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -289,23 +255,21 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr120</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/jsr120_1.1.jar</file>
+                  <file>${source.homeDir}/lib/jsr120_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
-                <id>jsr135_1.2.jar</id>
+                <id>jsr135_1.1.jar</id>
                 <goals>
                   <goal>deploy-file</goal>
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr135</artifactId>
-                  <version>1.2</version>
-                  <file>${path}/lib/jsr135_1.2.jar</file>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr135_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -315,10 +279,33 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr172</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr172_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr172_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr172_1.0-base.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr172-base</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr172_1.0-base.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr172_1.0-xmlrpc.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr172-xmlrpc</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr172_1.0-xmlrpc.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -328,10 +315,57 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr177_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr177_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0-apdu.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177-apdu</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0-apdu.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0-crypto.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177-crypto</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0-crypto.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0-jcrmi.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177-jcrmi</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0-jcrmi.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0-pki.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177-pki</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0-pki.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -341,10 +375,33 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr179</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr179_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr179_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr180_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr180</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr180_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr180_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr180</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr180_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -354,10 +411,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr184</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/jsr184_1.1.jar</file>
+                  <file>${source.homeDir}/lib/jsr184_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -367,10 +423,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr205</artifactId>
                   <version>2.0</version>
-                  <file>${path}/lib/jsr205_2.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr205_2.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -380,10 +435,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr211</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr211_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr211_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -393,10 +447,21 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr226</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr226_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr226_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr229_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr229</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr229_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -406,10 +471,21 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr234</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr234_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr234_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr238_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr238</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr234_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -419,36 +495,33 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr239</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr239_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr239_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
-                <id>jsr256_1.2.jar</id>
+                <id>jsr256_1.0.jar</id>
                 <goals>
                   <goal>deploy-file</goal>
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr256</artifactId>
-                  <version>1.2</version>
-                  <file>${path}/lib/jsr256_1.2.jar</file>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr256_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
-                <id>jsr257_1.0.jar</id>
+                <id>jsr256_1.1.jar</id>
                 <goals>
                   <goal>deploy-file</goal>
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
-                  <artifactId>jsr257</artifactId>
-                  <version>1.0</version>
-                  <file>${path}/lib/jsr257_1.0.jar</file>
+                  <artifactId>jsr256</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr256_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -458,23 +531,21 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr280</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr280_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr280_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
-                <id>logging_1.0.jar</id>
+                <id>midp_1.0.jar</id>
                 <goals>
                   <goal>deploy-file</goal>
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
-                  <artifactId>logging</artifactId>
+                  <artifactId>midp</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/logging_1.0.jar</file>
+                  <file>${source.homeDir}/lib/midp_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -484,23 +555,33 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>midp</artifactId>
                   <version>2.0</version>
-                  <file>${path}/lib/midp_2.0.jar</file>
+                  <file>${source.homeDir}/lib/midp_2.0.jar</file>
                 </configuration>
               </execution>
               <execution>
-                <id>omda_ap_1.0.jar</id>
+                <id>midp_2.1.jar</id>
                 <goals>
                   <goal>deploy-file</goal>
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
-                  <artifactId>omda-ap</artifactId>
+                  <artifactId>midp</artifactId>
+                  <version>2.1</version>
+                  <file>${source.homeDir}/lib/midp_2.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>pbp_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>pbp</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/omda_ap_1.0.jar</file>
+                  <file>${source.homeDir}/lib/pbp_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -510,10 +591,33 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>pbp</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/pbp_1.1.jar</file>
+                  <file>${source.homeDir}/lib/pbp_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>pp_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>pp</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/pp_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>pp_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>pp</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/pp_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -523,10 +627,1024 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>secop</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/secop_1.0.jar</file>
+                  <file>${source.homeDir}/lib/secop_1.0.jar</file>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-environment-variable-is-set</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireFilesExist>
+                      <files>
+                        <file>${source.homeDir}</file>
+                      </files>
+                    </requireFilesExist>
+                  </rules>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>javame305</id>
+      <properties>
+        <target.groupId>javame305</target.groupId>
+        <source.homeDir>${env.JAVAME305_HOME}</source.homeDir>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <groupId>${target.groupId}</groupId>
+            </configuration>
+            <executions>
+              <execution>
+                <id>agui_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>agui</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/agui_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cdc_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>cdc</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/cdc_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cdc_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>cdc</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/cdc_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cldc_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>cldc</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/cldc_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cldc_1.1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>cldc</artifactId>
+                  <version>1.1.1</version>
+                  <file>${source.homeDir}/lib/cldc_1.1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cldc_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>cldc</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/cldc_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>fp_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>fp</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/fp_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>fp_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>fp</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/fp_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr75_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr75</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr75_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr082_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr082</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr082_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr120_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr120</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr120_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr135_1.2.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr135</artifactId>
+                  <version>1.2</version>
+                  <file>${source.homeDir}/lib/jsr135_1.2.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr172_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr172</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr172_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr172_1.0-base.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr172-base</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr172_1.0-base.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr172_1.0-xmlrpc.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr172-xmlrpc</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr172_1.0-xmlrpc.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0-apdu.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177-apdu</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0-apdu.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0-crypto.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177-crypto</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0-crypto.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0-jcrmi.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177-jcrmi</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0-jcrmi.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0-pki.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177-pki</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0-pki.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr179_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr179</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr179_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr180_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr180</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr180_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr184_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr184</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr184_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr205_2.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr205</artifactId>
+                  <version>2.0</version>
+                  <file>${source.homeDir}/lib/jsr205_2.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr211_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr211</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr211_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr226_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr226</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr226_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr229_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr229</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr229_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr234_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr234</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr234_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr238_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr238</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr234_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr239_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr239</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr239_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr253_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr253</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr253_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr256_1.2.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr256</artifactId>
+                  <version>1.2</version>
+                  <file>${source.homeDir}/lib/jsr256_1.2.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr257_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr257</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr257_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr258_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr258</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr258_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr280_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr280</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr280_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr281_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr281</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr281_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr287_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr287</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr287_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr293_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr293</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr293_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>midp_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>midp</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/midp_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>midp_2.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>midp</artifactId>
+                  <version>2.0</version>
+                  <file>${source.homeDir}/lib/midp_2.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>midp_2.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>midp</artifactId>
+                  <version>2.1</version>
+                  <file>${source.homeDir}/lib/midp_2.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>pbp_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>pbp</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/pbp_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>pbp_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>pbp</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/pbp_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>pp_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>pp</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/pp_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>pp_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>pp</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/pp_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>secop_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>secop</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/secop_1.0.jar</file>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-environment-variable-is-set</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireFilesExist>
+                      <files>
+                        <file>${source.homeDir}</file>
+                      </files>
+                    </requireFilesExist>
+                  </rules>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>javame34</id>
+      <properties>
+        <target.groupId>javame34</target.groupId>
+        <source.homeDir>${env.JAVAME34_HOME}</source.homeDir>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <groupId>${target.groupId}</groupId>
+            </configuration>
+            <executions>
+              <execution>
+                <id>agui_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>agui</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/agui_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>ams_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>amsc</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/ams_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cdc_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>cdc</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/cdc_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cldc_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>cldc</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/cldc_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cldc_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>cldc</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/cldc_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>deviceaccess_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>deviceaccess</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/deviceaccess_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>embedded-support-api.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>embedded-support-api</artifactId>
+                  <version>noversion</version>
+                  <file>${source.homeDir}/lib/embedded-support-api.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>fp_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>fp</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/fp_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>impng_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>impng</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/impng_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr75_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr75</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr75_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr082_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr082</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr082_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr120_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr120</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr120_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr135_1.2.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr135</artifactId>
+                  <version>1.2</version>
+                  <file>${source.homeDir}/lib/jsr135_1.2.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr172_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr172</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr172_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr177_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr177</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr177_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr179_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr179</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr179_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr184_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr184</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/jsr184_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr205_2.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr205</artifactId>
+                  <version>2.0</version>
+                  <file>${source.homeDir}/lib/jsr205_2.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr211_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr211</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr211_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr226_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr226</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr226_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr234_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr234</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr234_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr239_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr239</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr239_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr256_1.2.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr256</artifactId>
+                  <version>1.2</version>
+                  <file>${source.homeDir}/lib/jsr256_1.2.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr257_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr257</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr257_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>jsr280_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>jsr280</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/jsr280_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>logging_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>logging</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/logging_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>midp_2.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>midp</artifactId>
+                  <version>2.0</version>
+                  <file>${source.homeDir}/lib/midp_2.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>omda_ap_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>omda-ap</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/omda_ap_1.0.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>pbp_1.1.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>pbp</artifactId>
+                  <version>1.1</version>
+                  <file>${source.homeDir}/lib/pbp_1.1.jar</file>
+                </configuration>
+              </execution>
+              <execution>
+                <id>secop_1.0.jar</id>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <phase>install</phase>
+                <configuration>
+                  <artifactId>secop</artifactId>
+                  <version>1.0</version>
+                  <file>${source.homeDir}/lib/secop_1.0.jar</file>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-environment-variable-is-set</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireFilesExist>
+                      <files>
+                        <file>${source.homeDir}</file>
+                      </files>
+                    </requireFilesExist>
+                  </rules>
                 </configuration>
               </execution>
             </executions>
@@ -538,13 +1656,16 @@
       <id>javame81</id>
       <properties>
         <target.groupId>javame81</target.groupId>
-        <path>${env.JAVAME81_HOME}</path>
+        <source.homeDir>${env.JAVAME81_HOME}</source.homeDir>
       </properties>
       <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <groupId>${target.groupId}</groupId>
+            </configuration>
             <executions>
               <execution>
                 <id>cldc_1.8.jar</id>
@@ -553,10 +1674,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.8</version>
-                  <file>${path}/lib/cldc_1.8.jar</file>
+                  <file>${source.homeDir}/lib/cldc_1.8.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -566,10 +1686,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>configuration</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/configuration_1.0.jar</file>
+                  <file>${source.homeDir}/lib/configuration_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -579,10 +1698,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/device-io_1.0.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -592,10 +1710,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>gcf</artifactId>
                   <version>1.8</version>
-                  <file>${path}/lib/gcf_1.8.jar</file>
+                  <file>${source.homeDir}/lib/gcf_1.8.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -605,10 +1722,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>httpclient</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/httpclient_1.0.jar</file>
+                  <file>${source.homeDir}/lib/httpclient_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -618,10 +1734,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>json</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/json_1.0.jar</file>
+                  <file>${source.homeDir}/lib/json_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -631,10 +1746,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr75-fc</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr75_1.0-fc.jar</file>
+                  <file>${source.homeDir}/lib/jsr75_1.0-fc.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -644,10 +1758,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr120</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/jsr120_1.1.jar</file>
+                  <file>${source.homeDir}/lib/jsr120_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -657,10 +1770,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr172</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr172_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr172_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -670,10 +1782,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-apdu</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr177_1.0-apdu.jar</file>
+                  <file>${source.homeDir}/lib/jsr177_1.0-apdu.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -683,10 +1794,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-crypto</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr177_1.0-crypto.jar</file>
+                  <file>${source.homeDir}/lib/jsr177_1.0-crypto.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -696,10 +1806,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr179</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr179_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr179_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -709,10 +1818,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr280</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr280_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr280_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -722,10 +1830,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -735,10 +1842,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-celluar</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-cellular.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-cellular.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -748,10 +1854,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-event</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-event.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-event.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -761,10 +1866,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-io</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-io.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-io.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -774,10 +1878,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-key</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-key.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-key.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -787,10 +1890,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-lui</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-lui.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-lui.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -800,10 +1902,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-media</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-media.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-media.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -813,10 +1914,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-power</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-power.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-power.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -826,10 +1926,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-rms</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-rms.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-rms.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -839,10 +1938,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-swm</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-swm.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-swm.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -852,10 +1950,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>oauth2</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/oauth2_1.0.jar</file>
+                  <file>${source.homeDir}/lib/oauth2_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -865,10 +1962,30 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>satsa-extensions-api</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/satsa_extensions_api.jar</file>
+                  <file>${source.homeDir}/lib/satsa_extensions_api.jar</file>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-environment-variable-is-set</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireFilesExist>
+                      <files>
+                        <file>${source.homeDir}</file>
+                      </files>
+                    </requireFilesExist>
+                  </rules>
                 </configuration>
               </execution>
             </executions>
@@ -880,13 +1997,16 @@
       <id>javame82</id>
       <properties>
         <target.groupId>javame82</target.groupId>
-        <path>${env.JAVAME82_HOME}</path>
+        <source.homeDir>${env.JAVAME82_HOME}</source.homeDir>
       </properties>
       <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <groupId>${target.groupId}</groupId>
+            </configuration>
             <executions>
               <execution>
                 <id>cldc_1.8.jar</id>
@@ -895,10 +2015,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>cldc</artifactId>
                   <version>1.8</version>
-                  <file>${path}/lib/cldc_1.8.jar</file>
+                  <file>${source.homeDir}/lib/cldc_1.8.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -908,10 +2027,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>configuration</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/configuration_1.0.jar</file>
+                  <file>${source.homeDir}/lib/configuration_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -921,10 +2039,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/device-io_1.0.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -934,10 +2051,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -947,10 +2063,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-adc</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_adc.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_adc.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -960,10 +2075,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-atcmd</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_atcmd.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_atcmd.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -973,10 +2087,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-counter</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_counter.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_counter.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -986,10 +2099,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-dac</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_dac.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_dac.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -999,10 +2111,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-generic</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_generic.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_generic.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1012,10 +2123,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-gpio</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_gpio.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_gpio.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1025,10 +2135,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-i2cbus</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_i2cbus.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_i2cbus.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1038,10 +2147,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-mmio</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_mmio.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_mmio.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1051,10 +2159,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-modem</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_modem.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_modem.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1064,10 +2171,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-pwm</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_pwm.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_pwm.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1077,10 +2183,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-spibus</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_spibus.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_spibus.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1090,10 +2195,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-uart</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_uart.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_uart.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1103,10 +2207,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>device-io-watchdog</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/device-io_1.1_watchdog.jar</file>
+                  <file>${source.homeDir}/lib/device-io_1.1_watchdog.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1116,10 +2219,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>gcf</artifactId>
                   <version>1.8</version>
-                  <file>${path}/lib/gcf_1.8.jar</file>
+                  <file>${source.homeDir}/lib/gcf_1.8.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1129,10 +2231,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>httpclient</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/httpclient_1.1.jar</file>
+                  <file>${source.homeDir}/lib/httpclient_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1142,10 +2243,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>json</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/json_1.0.jar</file>
+                  <file>${source.homeDir}/lib/json_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1155,10 +2255,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr75-fc</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr75_1.0-fc.jar</file>
+                  <file>${source.homeDir}/lib/jsr75_1.0-fc.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1168,10 +2267,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr120</artifactId>
                   <version>1.1</version>
-                  <file>${path}/lib/jsr120_1.1.jar</file>
+                  <file>${source.homeDir}/lib/jsr120_1.1.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1181,10 +2279,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr172</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr172_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr172_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1194,10 +2291,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-apdu</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr177_1.0-apdu.jar</file>
+                  <file>${source.homeDir}/lib/jsr177_1.0-apdu.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1207,10 +2303,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr177-crypto</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr177_1.0-crypto.jar</file>
+                  <file>${source.homeDir}/lib/jsr177_1.0-crypto.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1220,10 +2315,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr179</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr179_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr179_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1233,10 +2327,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>jsr280</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/jsr280_1.0.jar</file>
+                  <file>${source.homeDir}/lib/jsr280_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1246,10 +2339,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1259,10 +2351,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-celluar</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-cellular.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-cellular.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1272,10 +2363,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-event</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-event.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-event.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1285,10 +2375,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-io</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-io.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-io.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1298,10 +2387,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-key</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-key.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-key.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1311,10 +2399,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-lui</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-lui.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-lui.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1324,10 +2411,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-media</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-media.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-media.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1337,10 +2423,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-power</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-power.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-power.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1350,10 +2435,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-rms</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-rms.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-rms.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1363,10 +2447,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>meep-swm</artifactId>
                   <version>8.0</version>
-                  <file>${path}/lib/meep_8.0-swm.jar</file>
+                  <file>${source.homeDir}/lib/meep_8.0-swm.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1376,10 +2459,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>oauth2</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/oauth2_1.0.jar</file>
+                  <file>${source.homeDir}/lib/oauth2_1.0.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1389,10 +2471,9 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>satsa-extensions-api</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/satsa_extensions_api.jar</file>
+                  <file>${source.homeDir}/lib/satsa_extensions_api.jar</file>
                 </configuration>
               </execution>
               <execution>
@@ -1402,10 +2483,30 @@
                 </goals>
                 <phase>install</phase>
                 <configuration>
-                  <groupId>${target.groupId}</groupId>
                   <artifactId>ssl-extensions-api</artifactId>
                   <version>1.0</version>
-                  <file>${path}/lib/ssl_extensions_api.jar</file>
+                  <file>${source.homeDir}/lib/ssl_extensions_api.jar</file>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-environment-variable-is-set</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireFilesExist>
+                      <files>
+                        <file>${source.homeDir}</file>
+                      </files>
+                    </requireFilesExist>
+                  </rules>
                 </configuration>
               </execution>
             </executions>
