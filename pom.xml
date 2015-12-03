@@ -10,7 +10,7 @@
 
   <groupId>com.github.jinahya</groupId>
   <artifactId>java-me-sdk-installer</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
@@ -82,7 +82,7 @@
                   </filterchain>
                 </loadresource>
                 <echo message="target.groupPath: ${target.groupPath}" />
-                <mkdir dir="${project.build.directory}"/>
+                <mkdir dir="${project.build.directory}" />
                 <zip destfile="${project.build.directory}/${target.groupId}-${project.version}.zip" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
                 <tar destfile="${project.build.directory}/${target.groupId}-${project.version}.tar" basedir="${settings.localRepository}" includes="${target.groupPath}/**/*" />
                 <gzip src="${project.build.directory}/${target.groupId}-${project.version}.tar" destfile="${project.build.directory}/${target.groupId}-${project.version}.tar.gz" />
