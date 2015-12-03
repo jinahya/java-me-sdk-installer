@@ -4,13 +4,13 @@
 
 Installs/Deploys artifacts in Oracle's Java ME SDK installation directory to local/remote repositories.
 
-|sdk                     |profile.id  |${source.homeDir}      |${target.groupId}  |
-|------------------------|------------|-----------------------|-------------------|
-|ORACLE JAVA ME SDK 3.0  |`javame30`  |`${env.JAVAME30_HOME}` |`javame30`         |
-|ORACLE JAVA ME SDK 3.0.5|`javame305` |`${env.JAVAME305_HOME}`|`javame305`        |
-|ORACLE JAVA ME SDK 3.4  |`javame34`  |`${env.JAVAME34_HOME}` |`javame34`         |
-|ORACLE JAVA ME SDK 8.1  |`javame81`  |`${env.JAVAME81_HOME}` |`javame81`         |
-|ORACLE JAVA ME SDK 8.2  |`javame82`  |`${env.JAVAME82_HOME}` |`javame82`         |
+|sdk  |profile.id|${source.homeDir}    |${target.groupId}|
+|-----|----------|---------------------|-----------------|
+|3.0  |javame30  |${env.JAVAME30_HOME} |javame30         |
+|3.0.5|javame305 |${env.JAVAME305_HOME}|javame305        |
+|3.4  |javame34  |${env.JAVAME34_HOME} |javame34         |
+|8.1  |javame81  |${env.JAVAME81_HOME} |javame81         |
+|8.2  |javame82  |${env.JAVAME82_HOME} |javame82         |
 
 **You can override default properties via `-Dsource.homeDir` and `-Dtarget.groupId`.**
 
